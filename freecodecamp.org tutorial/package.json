@@ -1,0 +1,21 @@
+{
+  "name": "freecodecamp.org-tutorial",
+  "version": "1.0.0",
+  "description": "This tutorial is the recreation of the FreeCodeCamp GraphQL course. Only the backend in GaphQL is implemented.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abhik Banerjee",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.0.0",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
