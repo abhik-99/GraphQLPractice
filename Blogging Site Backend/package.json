@@ -1,0 +1,19 @@
+{
+  "name": "blogging-site-backend",
+  "version": "1.0.0",
+  "description": "This is a backend for a blogging site implemented in GraphQL. Starting out from JSON, it will use mongoose+MongoDB and then move on to using Prisma",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "author": "Abhik Banerjee",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.0.0",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.9",
+    "nodemon": "^2.0.3"
+  }
+}
