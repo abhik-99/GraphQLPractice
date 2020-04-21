@@ -4,7 +4,7 @@
   "description": "This is a backend for a blogging site implemented in GraphQL. Starting out from JSON, it will use mongoose+MongoDB and then move on to using Prisma",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon app.js"
+    "test": "nodemon app.js --ext js,graphql"
   },
   "author": "Abhik Banerjee",
   "license": "ISC",
