@@ -1,56 +1,72 @@
-const express = require('express');
-const graphHTTP = require('express-graphql')
-
+const {GraphQLServer} = require('graphql-yoga')
 const PORT = process.env.PORT || 3000;
+const _ = require('lodash')
 
-var app = express();
-
-const graphql = require('graphql');
-const {buildSchema } = graphql;
-
-const Users = [
-    {id: 1, name: "Test 1", age:23},
-    {id: 2, name: "Test 2", age:34}
+const Users =[
+    {id:1, name: "AB", age:23},
+    {id:2, name: "BC", age:30}
 ]
 
 const Posts = [
-    {id: 1, genre: "tech", published: false, author: 1},
-    {id: 2, genre: "slice of life", published: true, author: 1},
-    {id: 3, genre: "tech", published: false, author: 2},
+    {id: 1, name: "Post 1", genre: 'fiction', authorId: 1, published: true},
+    {id: 2, name: "Post 1", genre: 'non-fiction', authorId: 1, published: false},
+    {id: 3, name: "Post 2", genre: 'non-fiction', authorId: 2, published: false},
+    {id: 4, name: "Post 3", genre: 'fiction', authorId: 2, published: true},
 ]
-
-const schema = buildSchema(`
+const typeDefs = `
 type Query{
-    quoteOfTheDay: String,
-    users: [User!]!
-    posts: [Post!]!
-    user(data: User): User
+    hello: String!,
+    users: [User!],
+    user(id: Int!): User,
+    posts: [Post!],
+    post(id: Int!): Post
 }
+
 type User{
     id: ID!,
-    name: String,
-    age: Int
+    name: String!,
+    age: Int,
+    posts: [Post]
 }
 type Post{
     id: ID!,
-    genre: String, 
+    name: String,
+    genre: String!,
     published: Boolean,
-    author: ID
+    author: User,
 }
-`)
-const resolver = {
-    users: ()=>{
-        return Users
+`
+
+const resolvers = {
+    Query:{
+        hello(){
+            return "Test Success!"
+        },
+        users(){
+            return Users
+        },
+        user(parent, args, ctx){
+            return _.find(Users, {id: args.id})
+        },
+        posts(){
+            return Posts
+        },
+        post(parent, args, ctx){
+            return _.find(Posts, {id: args.id})
+        }
     },
-    quoteOfTheDay: ()=>{
-        return "Test Success!"
+    Post:{
+        author(parent, args, ctx){
+            return _.find(Users, { id: parent.authorId})
+        }
+    },
+    User:{
+        posts(parent, args, ctx){
+            return _.filter(Posts, {authorId: parent.id})
+        }
     }
 }
 
-app.use('/graphql', graphHTTP({
-    graphiql: true,
-    schema,
-    rootValue: resolver
-}))
-app.get('/', (req,res)=> res.send("API Working! Please head over to /graphql to use the backend"))
-app.listen(PORT, ()=> console.log("Listening on Port", PORT));
+const server = new GraphQLServer({typeDefs, resolvers})
+
+server.start({port: PORT},()=> console.log('Server Up and running!'))
