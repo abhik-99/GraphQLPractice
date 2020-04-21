@@ -16,10 +16,10 @@ const Posts = [
 ]
 
 const Comments = [
-    {id: 1, text: 'This post could have been made better', authorId: 1},
-    {id: 2, text: 'This post could not have been made better', authorId: 2},
-    {id: 3, text: 'This post should have been made better', authorId: 1},
-    {id: 4, text: 'This post must be made better', authorId: 3},
+    {id: 1, text: 'This post could have been made better', authorId: 1, postId: 1},
+    {id: 2, text: 'This post could not have been made better', authorId: 2, postId: 1},
+    {id: 3, text: 'This post should have been made better', authorId: 1, postId: 2},
+    {id: 4, text: 'This post must be made better', authorId: 3, postId: 3},
 ]
 
 const typeDefs = `
@@ -45,11 +45,13 @@ type Post{
     genre: String!,
     published: Boolean,
     author: User,
+    comments: [Comment!]!
 }
 type Comment{
     id: ID!,
     text: String!,
-    author: User!
+    author: User!,
+    post: Post!
 }
 `
 
@@ -77,6 +79,9 @@ const resolvers = {
     Post:{
         author(parent, args, ctx){
             return _.find(Users, { id: parent.authorId})
+        },
+        comments(parent, args, ctx){
+            return _.filter(Comments, {postId: parent.id})
         }
     },
     User:{
@@ -90,6 +95,9 @@ const resolvers = {
     Comment:{
         author(parent, args, ctx){
             return _.find(Users, {id: parent.authorId})
+        },
+        post(parent, args, ctx){
+            return _.find(Posts, {id: parent.id})
         }
     }
 }
