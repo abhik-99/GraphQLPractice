@@ -1,0 +1,12 @@
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+}
+
+type Post{
+  id: ID! @id
+  name: String!
+  genre: String!
+  author: User
+}
