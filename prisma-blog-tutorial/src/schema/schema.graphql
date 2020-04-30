@@ -1,0 +1,61 @@
+# import Post from '../generated/schema.graphql'
+# import User from '../generated/schema.graphql'
+# import Comment from '.../generated/schema.graphql'
+type Query{
+    hello: String!,
+    users: [User!],
+    user(id: ID!): User,
+    posts: [Post!],
+    post(id: Int!): Post,
+    comments: [Comment!]!
+}
+
+type Mutation{
+    createUser(data: CreateUserInput): User!,
+    createPost(data: CreatePostInput): Post!,
+    createComment(text: String!, authorId: ID!, postId: ID!): Comment!,
+    deleteUser(id: ID!): User,
+    deletePost(id: ID!): Post,
+    deleteComment(id: ID!): Comment
+}
+type User{
+    id: ID!,
+    name: String,
+    email: String!,
+    age: Int,
+    posts: [Post],
+    comments: [Comment!]
+}
+
+input CreateUserInput{
+    name: String,
+    email: String!,
+    age: Int
+}
+
+input CreatePostInput{
+    name: String!,
+    genre: String,
+    published: Boolean,
+    authorId: ID!
+}
+
+input CreateCommentInput{
+    text: String!,
+    postId: ID!,
+    authorId: ID!
+}
+type Post{
+    id: ID!,
+    name: String,
+    genre: String!,
+    published: Boolean,
+    author: User,
+    comments: [Comment!]!
+}
+type Comment{
+    id: ID!,
+    text: String!,
+    author: User!,
+    post: Post!
+}
