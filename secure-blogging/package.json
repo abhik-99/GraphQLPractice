@@ -1,21 +1,17 @@
 {
-  "name": "blogging-site-backend",
+  "name": "secure-blogging",
   "version": "1.0.0",
-  "description": "This is a backend for a blogging site implemented in GraphQL. Starting out from JSON, it will use mongoose+MongoDB and then move on to using Prisma",
-  "main": "app.js",
+  "description": "",
+  "main": "src/index.js",
   "scripts": {
-    "test": "nodemon app.js --ext js,graphql"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "get-schema": "graphql get-schema -p prisma"
   },
-  "author": "Abhik Banerjee",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "graphql": "^15.0.0",
     "graphql-yoga": "^1.18.3",
-    "lodash": "^4.17.15",
-    "mongoose": "^5.9.9",
-    "nodemon": "^2.0.3",
-    "prisma-binding": "^2.3.16",
-    "uuid": "^7.0.3"
+    "prisma-binding": "^2.3.16"
   }
 }

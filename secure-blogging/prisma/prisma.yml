@@ -1,3 +1,6 @@
 endpoint: http://localhost:4466
-datamodel: datamodel.prisma
+datamodel: datamodel.graphql
 databaseType: document
+hooks:
+  post-deploy:
+    - graphql get-schema -p prisma
